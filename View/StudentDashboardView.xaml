@@ -1,0 +1,35 @@
+﻿<Window x:Class="MIVLGUPRO.View.StudentDashboardView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Панель студента" Height="450" Width="800">
+    <Grid>
+        <TabControl>
+            <!-- Вкладка с практиками -->
+            <TabItem Header="Практики">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <!-- Список практик -->
+                    <ListView ItemsSource="{Binding Practices}" SelectedItem="{Binding SelectedPractice}" Grid.Row="0">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Название" DisplayMemberBinding="{Binding Name}" />
+                                <GridViewColumn Header="Группа" DisplayMemberBinding="{Binding Group.Name}" />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+
+                    <!-- Кнопка для выполнения практики -->
+                    <Button Content="Начать практику"
+                        Command="{Binding StartPracticeCommand}"
+                        IsEnabled="{Binding SelectedPractice, Converter={StaticResource NullToBooleanConverter}}"
+                        Grid.Row="1" Height="40" Margin="0,10,0,0" />
+
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

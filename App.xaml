@@ -1,0 +1,10 @@
+﻿<Application x:Class="MIVLGUPRO.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:MIVLGUPRO"
+             StartupUri="View/LoginView.xaml">
+    <Application.Resources>
+        <local:NullToBooleanConverter x:Key="NullToBooleanConverter" />
+        <local:CorrectnessToBrushConverter x:Key="CorrectnessToBrushConverter" />
+    </Application.Resources>
+</Application>

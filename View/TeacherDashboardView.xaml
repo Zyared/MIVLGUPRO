@@ -1,0 +1,114 @@
+﻿<Window x:Class="MIVLGUPRO.View.TeacherDashboardView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Панель управления учителя" Height="450" Width="800">
+
+    <Grid>
+        <TabControl>
+            <!-- Вкладка управления группами -->
+            <TabItem Header="Группы">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <!-- Верхняя часть: кнопки -->
+                    <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0,0,0,10">
+                        <Button Content="Создать группу" Command="{Binding CreateGroupCommand}" Height="40" Margin="0,0,10,0" />
+                        <Button Content="Добавить ученика в группу" Command="{Binding SelectStudentCommand}" Height="40" Margin="0,0,10,0" />
+                    </StackPanel>
+
+                    <!-- Нижняя часть: список групп и студентов -->
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="3*" />
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Список групп -->
+                        <ListView ItemsSource="{Binding Groups}" SelectedItem="{Binding SelectedGroup}" Grid.Column="0" Margin="0,0,10,0">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}" />
+                                    <GridViewColumn Header="Название" DisplayMemberBinding="{Binding Name}" />
+                                    <GridViewColumn Header="Количество студентов" DisplayMemberBinding="{Binding Students.Count}" />
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+
+                        <!-- Список студентов выбранной группы -->
+                        <Grid Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <ListView ItemsSource="{Binding SelectedGroupStudents}" SelectedItem="{Binding SelectedStudent}">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Header="ФИО" DisplayMemberBinding="{Binding FullName}" />
+                                        <GridViewColumn Header="Логин" DisplayMemberBinding="{Binding Username}" />
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+
+
+                            <Button Content="Удалить из группы"
+                        Command="{Binding RemoveStudentCommand}"
+                        IsEnabled="{Binding SelectedStudent, Converter={StaticResource NullToBooleanConverter}}"
+                        Grid.Row="1" Height="40" Margin="0,10,0,0" />
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </TabItem>
+
+
+            <!-- Вкладка управления практиками -->
+            <TabItem Header="Практики">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <Button Content="Создать практику" Command="{Binding CreatePracticeCommand}" Grid.Row="0" Height="40" Margin="0,0,0,10" />
+
+                    <ListView ItemsSource="{Binding Practices}" Grid.Row="1">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}" />
+                                <GridViewColumn Header="Название" DisplayMemberBinding="{Binding Name}" />
+                                <GridViewColumn Header="Группа" DisplayMemberBinding="{Binding Group.Name}" />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
+            </TabItem>
+
+            <!-- Вкладка управления заданиями -->
+            <TabItem Header="Задания">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <Button Content="Добавить задание" Command="{Binding AddTaskCommand}" Grid.Row="0" Height="40" Margin="0,0,0,10" />
+
+                    <ListView ItemsSource="{Binding Tasks}" Grid.Row="1">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}" />
+                                <GridViewColumn Header="Название" DisplayMemberBinding="{Binding Name}" />
+                                <GridViewColumn Header="Практика" DisplayMemberBinding="{Binding Practice.Name}" />
+                                <GridViewColumn Header="Описание" DisplayMemberBinding="{Binding Description}" />
+                                <GridViewColumn Header="Вариант" DisplayMemberBinding="{Binding Variant}" />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
